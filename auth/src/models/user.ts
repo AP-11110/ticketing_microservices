@@ -27,6 +27,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+}, {
+    toJSON: { // modifies json representation of user
+        transform(doc, ret) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.password;
+            delete ret.__v;
+        }
+    }
 });
 
 // mongoose middleware, ran before saving
