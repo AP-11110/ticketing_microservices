@@ -1,13 +1,11 @@
 import express from "express";
 import "express-async-errors";
 import cookieSession from "cookie-session";
-
-import { currentUserRouter } from "./routes/current-user";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
-import { errorHandler, NotFoundError } from "@ticketing-ap/common";
-
+import { errorHandler, NotFoundError, currentUser } from "@ticketing-ap/common";
+import { createTicketRouter } from "./routes/new";
+import { showTicketRouter } from "./routes/show";
+import { indexTicketRouter } from "./routes";
+import { updateTicketRouter } from "./routes/update";
 const app = express();
 
 app.set('trust proxy', true);
@@ -21,10 +19,11 @@ app.use(
     })
 )
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+app.use(currentUser);
+app.use(createTicketRouter);
+app.use(showTicketRouter);
+app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 
 // next must be used when dealing with promises
 // this can be avoided by using - import "express-async-errors";
