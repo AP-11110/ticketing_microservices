@@ -8,6 +8,9 @@ declare global {
     function signin(): string[]; // cookie resolves with value (array of strings)
 }
 
+// fake implementation of nats-wrapper so that jest doesn't depend on the real one
+jest.mock("../nats-wrapper");
+
 // hook function, this will run before all the tests
 let mongo: any;
 beforeAll(async () => {
@@ -22,6 +25,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+    jest.clearAllMocks();
     const collections = await mongoose.connection.db.collections();
 
     for(let collection of collections) {
