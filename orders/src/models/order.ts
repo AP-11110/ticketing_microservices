@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@ticketing-ap/common";
 import { TicketDoc } from "./ticket";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 // associating orderstatus with order when importing
 export { OrderStatus };
@@ -17,6 +18,7 @@ interface OrderDoc extends mongoose.Document {
     status: OrderStatus;
     expiresAt: Date;
     ticket: TicketDoc;
+    version: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -49,6 +51,10 @@ const orderSchema = new mongoose.Schema({
         }
     }
 });
+
+// handles versions so that events are run in order
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
     return new Order(attrs);
