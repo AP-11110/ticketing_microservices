@@ -1,5 +1,5 @@
 {
-  "name": "orders",
+  "name": "payments",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ticketing-ap/common": "^1.0.11",
+    "@ticketing-ap/common": "^1.0.12",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
@@ -30,6 +30,7 @@
     "mongoose": "^6.7.2",
     "mongoose-update-if-current": "^1.4.0",
     "node-nats-streaming": "^0.3.2",
+    "stripe": "^11.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
   },
