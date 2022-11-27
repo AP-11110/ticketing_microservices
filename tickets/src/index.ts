@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener"; 
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
 
 const start = async () => {
     if(!process.env.JWT_KEY) {
@@ -34,6 +36,10 @@ const start = async () => {
         // below are watching for interrupt or terminate signals (restarting or ctrl+c)
         process.on("SIGINT", () => natsWrapper.client.close())
         process.on("SIGTERM", () => natsWrapper.client.close())
+
+        // listening to events
+        new OrderCreatedListener(natsWrapper.client).listen();
+        new OrderCancelledListener(natsWrapper.client).listen();
         
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to MongoDB');
