@@ -7,7 +7,7 @@ const BuildClient = ({ req }) => {
     return axios.create({
         // http://SERVICENAME.NAMESPACE.svc.cluster.local
         // ingress service will forward the request
-        baseURL: "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+        baseURL: "http://www.microservicesandstuff.art/",
         headers: req.headers // stores info such as domain (ticketing.dev) & cookie
     });
 
